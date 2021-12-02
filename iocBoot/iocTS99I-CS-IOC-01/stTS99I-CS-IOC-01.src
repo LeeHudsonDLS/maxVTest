@@ -1,0 +1,70 @@
+
+cd "$(INSTALL)"
+
+
+
+# Allow use of Backspace in vxWorks monitor
+$(VXWORKS_ONLY)tyBackspaceSet(127)
+
+
+
+
+
+# IP site enumerations
+$(VXWORKS_ONLY)A = 0
+$(VXWORKS_ONLY)B = 1
+$(VXWORKS_ONLY)C = 2
+$(VXWORKS_ONLY)D = 3
+
+sysClkRateSet(100)
+
+sysCplusEnable=1
+
+# Load binaries on architectures that need to do so.
+# VXWORKS_ONLY, LINUX_ONLY and RTEMS_ONLY are macros that resolve
+# to a comment symbol on architectures that are not the current
+# build architecture, so they can be used liberally to do architecture
+# specific things. Alternatively, you can include an architecture
+# specific file.
+$(VXWORKS_ONLY)ld < bin/$(ARCH)/TS99I-CS-IOC-01.munch
+
+streamDebug = 0
+
+
+## Register all support components
+$(VXWORKS_ONLY)dbLoadDatabase("dbd/TS99I-CS-IOC-01.dbd")
+$(VXWORKS_ONLY)TS99I_CS_IOC_01_registerRecordDeviceDriver(pdbbase)
+
+
+## Load record instances
+$(VXWORKS_ONLY)dbLoadRecords("db/motor.db")
+
+# Initialise Hardware
+IVEC = newInterruptVector ()
+
+# OMS MAXv driver setup parameters: 
+#     (1)number of cards in array.
+#     (2)VME Address Type (16,24,32).
+#     (3)Base Address on 4K (0x1000) boundary.
+#     (4)interrupt vector (0=disable or  64 - 255).
+#     (5)interrupt level (1 - 6).
+#     (6)motor task polling rate (min=1Hz,max=60Hz).
+MAXvSetup(1, 16, 0xF000,     IVEC, 5, 10)
+drvMAXvdebug=0
+
+# OMS MAXv configuration string:
+#     (1) number of card being configured (0-14).
+#     (2) configuration string; axis type (PSO/PSE/PSM) MUST be set here.
+#         For example, set which TTL signal level defines
+#         an active limit switch.  Set X,Y,Z,T to active low and set U,V,R,S
+#         to active high.  Set all axes to open-loop stepper (PSO). See MAXv
+#         User's Manual for LL/LH and PSO/PSE/PSM commands.
+config0="AX;LH;HH;PSE; AY;LH;HH;PSE; AZ;LH;HH;PSE; AT;LH;HH;PSE"
+
+MAXvConfig(0, config0)
+
+
+iocInit()
+
+dbpf "FE99I-AL-APTR-01:X.PREM","AX AF"
+dbpf "FE99I-AL-APTR-01:X.POST","AX AN"

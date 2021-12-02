@@ -1,0 +1,9 @@
+This is our top level template
+
+Define a macro to pad numbers to two digits
+
+
+Parse our Aperture template - this is like using dbLoadTemplate
+
+
+

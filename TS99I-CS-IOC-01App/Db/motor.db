@@ -1,0 +1,40 @@
+# AUTOSAVE: level 0 = before record init, level 1 = before AND after record init
+#% autosave 0 DVAL OFF
+#% autosave 1 DIR DHLM DLLM TWV VBAS VELO ACCL BDST BVEL BACC RDBD EGU RTRY UEIP URIP DLY PREC DISA DISP FOFF OFF FRAC OMSL JVEL JAR
+#% autosave 2 DESC
+#% archiver 0.5 Monitor
+#% archiver 0.5 Monitor RBV
+#% gdatag,template,simpleMotor,,Test motor
+#% gdatag,motor,rw,,RECORD,Motor
+record(motor, "FE99I-AL-APTR-01:X") {
+  field(SCAN, "Passive")
+  field(MRES, "0.0002")
+  field(SREV, "400")
+  field(RRES, "0")
+  field(TWV, "1")
+  field(ERES, "0.00004")
+  field(JVEL, "1.0")
+  field(JAR, "0.5")
+  field(UEIP, "1")
+  field(PREM, "AX AF")
+  field(POST, "AX AN")
+  field(DESC, "Test motor")
+  field(DTYP, "OMS MAXv")
+  field(DIR, "1")
+  field(VELO, "0.50")
+  field(VBAS, "0")
+  field(VMAX, "0.5")
+  field(ACCL, "0.1")
+  field(BDST, "0")
+  field(BVEL, "0")
+  field(BACC, "0")
+  field(OUT, "#C0 S0 @")
+  field(PREC, "5")
+  field(EGU, "mm")
+  field(DHLM, "10")
+  field(DLLM, "0")
+  field(HLSV, "MINOR")
+  field(INIT, "AX AN;AX HH")
+  field(RTRY, "0")
+  field(FOFF, "1")
+}
