@@ -49,8 +49,11 @@ IVEC = newInterruptVector ()
 #     (4)interrupt vector (0=disable or  64 - 255).
 #     (5)interrupt level (1 - 6).
 #     (6)motor task polling rate (min=1Hz,max=60Hz).
-MAXvSetup(1, 16, 0xF000,     IVEC, 5, 10)
-drvMAXvdebug=0
+#MAXvSetup(1, 16, 0xF000,     IVEC, 5, 10)
+#drvMAXvdebug=0
+
+
+omsMAXvInitialise( "/dev/oms/1", 0xf000, 5, IVEC, 0)
 
 # OMS MAXv configuration string:
 #     (1) number of card being configured (0-14).
@@ -61,8 +64,13 @@ drvMAXvdebug=0
 #         User's Manual for LL/LH and PSO/PSE/PSM commands.
 config0="AX;LH;HH;PSE; AY;LH;HH;PSE; AZ;LH;HH;PSE; AT;LH;HH;PSE"
 
-MAXvConfig(0, config0)
+#MAXvConfig(0, config0)
 
+omsMAXvConfig(0, config0)
+
+drvAsynSerialPortConfigure( "OMS_S1", "/dev/oms/1", 0, 0, 1)
+omsAsynMotorCreate( "OMS_S1", 0, 0, 4);
+drvAsynMotorConfigure("OMS1", "omsAsynMotor", 0, 4)
 
 iocInit()
 

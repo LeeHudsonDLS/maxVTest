@@ -1,3 +1,5 @@
 FE=/dls_sw/prod/R3.14.12.7/support/FE/9-1
 include /dls_sw/prod/R3.14.12.7/support/FE/9-1/configure/RELEASE
 include /dls_sw/prod/R3.14.12.7/support/FE/9-1/configure/RELEASE.oms
+OMS = /dls_sw/work/R3.14.12.7/support/oms
+

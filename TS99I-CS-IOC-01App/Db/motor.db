@@ -38,3 +38,9 @@ record(motor, "FE99I-AL-APTR-01:X") {
   field(RTRY, "0")
   field(FOFF, "1")
 }
+
+record(asyn, "FE99I-CS-IOC-01:ASYN")
+{
+	field(DTYP, "asynRecordDevice")
+    field(PORT,"")
+}
